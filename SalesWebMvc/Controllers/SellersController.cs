@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SalesWebMvc.Models;
 using SalesWebMvc.Services;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,20 @@ namespace SalesWebMvc.Controllers
         {
             var list = _sellerService.FindAll();
             return View(list);
+        }
+
+        //por padrao e do tipo GET
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost] // Anotação usada para indicar que é um método de ação do tipo POST
+        [ValidateAntiForgeryToken] // Proteção contra ataques CSRF
+        public IActionResult Create(Seller seller)
+        {
+            _sellerService.Insert(seller);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

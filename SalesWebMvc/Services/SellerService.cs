@@ -20,5 +20,11 @@ namespace SalesWebMvc.Services
         {
             return _context.Seller.ToList(); //acessa os dados ta tabela vendedores e converte em lista. Operacao Sincrona. 
         }
+
+        public void Insert(Seller obj)
+        {
+            _context.Add(obj);
+            _context.SaveChanges();
+        }
     }
 }
