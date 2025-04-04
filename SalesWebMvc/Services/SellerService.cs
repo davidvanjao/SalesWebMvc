@@ -23,7 +23,7 @@ namespace SalesWebMvc.Services
 
         public void Insert(Seller obj)
         {
-            obj.Department = _context.Department.First();//adiciona ao campo departamento em vendedores, o primeiro registro encontrado na tabela departamento.
+            //obj.Department = _context.Department.First();//adiciona ao campo departamento em vendedores, o primeiro registro encontrado na tabela departamento.
             _context.Add(obj);
             _context.SaveChanges();
         }
