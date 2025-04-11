@@ -18,12 +18,17 @@ namespace SalesWebMvc.Data
 
         public void Seed()
         {
-            if(_context.Department.Any() ||
+            if(_context.Department.Any() || //Verifica se existe ao menos um registro na tabela
                 _context.Seller.Any() ||
-                _context.SalesRecord.Any())
+                _context.SalesRecord.Any() ||
+                _context.User.Any())
             {
                 return; //verifica se as tabelas ja foram populadas
             }
+
+            User u1 = new User("david@gmail.com", "123");
+            User u2 = new User("rafael@gmail.com", "123");
+            User u3 = new User("admin@admin.com", "123");
 
             Department d1 = new Department(1, "Computers");
             Department d2 = new Department(2, "Electronics");
@@ -67,6 +72,9 @@ namespace SalesWebMvc.Data
             SalesRecord r28 = new SalesRecord(28, new DateTime(2018, 10, 7), 4000.0, SaleStatus.Billed, s3);
             SalesRecord r29 = new SalesRecord(29, new DateTime(2018, 10, 23), 12000.0, SaleStatus.Billed, s5);
             SalesRecord r30 = new SalesRecord(30, new DateTime(2018, 10, 12), 5000.0, SaleStatus.Billed, s2);
+
+
+            _context.User.AddRange(u1, u2, u3);
 
             _context.Department.AddRange(d1, d2, d3, d4); //permite adicionar varios objetos de uma vez.
 

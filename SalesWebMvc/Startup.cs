@@ -14,6 +14,9 @@ using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Data;
 using SalesWebMvc.Services;
+using SalesWebMvc.Services.Exceptions;
+using SalesWebMvc.Services.Interface;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SalesWebMvc
 {
@@ -36,17 +39,29 @@ namespace SalesWebMvc
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddDbContext<SalesWebMvcContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"), builder =>
                         builder.MigrationsAssembly("SalesWebMvc")));
+
+
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) //Habilita o sistema de autenticação do ASP.NET Core usando Cookies
+                .AddCookie(options => //Adiciona a configuração do middleware de cookies
+                {
+                    options.LoginPath = "/Account/Login"; //Se o usuário não estiver autenticado e tentar acessar uma página protegida, redireciona ele pra essa URL
+                    options.LogoutPath = "/Account/Logout";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // duração do login
+                    options.SlidingExpiration = true; // renova o tempo se o usuário estiver ativo
+                });
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<SeedingService>(); //injecao de dependencias
             services.AddScoped<SellerService>();
             services.AddScoped<DepartmentService>();
             services.AddScoped<SalesRecordsService>();
+            services.AddScoped<IAuthService, AuthService>(); //Sempre que alguém pedir a interface IAuthService, entregue uma nova instância da classe AuthService
+
 
         }
 
@@ -80,6 +95,9 @@ namespace SalesWebMvc
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            // 👉 Aqui: habilita autenticação
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

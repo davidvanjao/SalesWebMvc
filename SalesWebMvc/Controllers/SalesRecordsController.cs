@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SalesWebMvc.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesWebMvc.Controllers
 {
+    [Authorize]
     public class SalesRecordsController : Controller
     {
         private readonly SalesRecordsService _salesRecordsService;

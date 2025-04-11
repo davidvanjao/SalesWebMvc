@@ -8,9 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using SalesWebMvc.Services.Exceptions;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesWebMvc.Controllers
 {
+    [Authorize]
     public class SellersController : Controller
     {
         private readonly SellerService _sellerService;
