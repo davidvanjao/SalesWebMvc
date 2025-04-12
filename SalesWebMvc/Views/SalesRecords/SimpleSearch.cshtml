@@ -19,7 +19,12 @@
                     <input type="date" class="form-control" name="maxDate" value=@ViewData["maxDate"] />
                 </div>
             </div>
+
+            <!-- Gerar PDF com os filtros aplicados -->
             <button type="submit" class="btn btn-primary">Filter</button>
+            <a href="@Url.Action("SimpleSearchPdf", "SalesRecords", new { minDate = ViewData["minDate"], maxDate = ViewData["maxDate"] })" target="_blank" class="btn btn-primary">
+                Visualizar PDF
+            </a>
         </form>
     </div>
 </nav>

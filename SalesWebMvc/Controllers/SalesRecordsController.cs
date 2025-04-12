@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SalesWebMvc.Services;
 using Microsoft.AspNetCore.Authorization;
+using Rotativa.AspNetCore;
 
 namespace SalesWebMvc.Controllers
 {
@@ -51,6 +52,23 @@ namespace SalesWebMvc.Controllers
             ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
             var result = await _salesRecordsService.FindByDateGroupingAsync(minDate, maxDate);
             return View(result);
+        }
+
+        public async Task<IActionResult> SimpleSearchPdf(DateTime? minDate, DateTime? maxDate)
+        {
+            if (!minDate.HasValue)
+                minDate = new DateTime(DateTime.Now.Year, 1, 1);
+
+            if (!maxDate.HasValue)
+                maxDate = DateTime.Now;
+
+            var result = await _salesRecordsService.FindByDateAsync(minDate, maxDate);
+
+            return new ViewAsPdf("SimpleSearchPdf", result)
+            {
+                FileName = "relatorio_simples.pdf",
+                ContentDisposition = Rotativa.AspNetCore.Options.ContentDisposition.Inline
+            };
         }
     }
 }

@@ -17,6 +17,7 @@ using SalesWebMvc.Services;
 using SalesWebMvc.Services.Exceptions;
 using SalesWebMvc.Services.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Rotativa.AspNetCore;
 
 namespace SalesWebMvc
 {
@@ -98,6 +99,10 @@ namespace SalesWebMvc
 
             // 👉 Aqui: habilita autenticação
             app.UseAuthentication();
+
+            //responsavel pelo pdf. rotativa e o caminho dentro da pasta wwwroot
+            Rotativa.AspNetCore.RotativaConfiguration.Setup(env, "Rotativa");
+
 
             app.UseMvc(routes =>
             {
