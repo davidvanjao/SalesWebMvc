@@ -62,6 +62,7 @@ namespace SalesWebMvc
             services.AddScoped<DepartmentService>();
             services.AddScoped<SalesRecordsService>();
             services.AddScoped<IAuthService, AuthService>(); //Sempre que alguém pedir a interface IAuthService, entregue uma nova instância da classe AuthService
+            services.AddScoped<ReportService>(); //gerador de pdf
 
 
         }

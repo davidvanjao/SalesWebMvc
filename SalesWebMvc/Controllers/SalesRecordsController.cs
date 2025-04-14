@@ -13,10 +13,12 @@ namespace SalesWebMvc.Controllers
     public class SalesRecordsController : Controller
     {
         private readonly SalesRecordsService _salesRecordsService;
+        private readonly ReportService _reportService;
 
-        public SalesRecordsController(SalesRecordsService salesRecordsService)
+        public SalesRecordsController(SalesRecordsService salesRecordsService, ReportService reportService)
         {
             _salesRecordsService = salesRecordsService;
+            _reportService = reportService;
         }
 
         public IActionResult Index()
@@ -56,19 +58,14 @@ namespace SalesWebMvc.Controllers
 
         public async Task<IActionResult> SimpleSearchPdf(DateTime? minDate, DateTime? maxDate)
         {
-            if (!minDate.HasValue)
-                minDate = new DateTime(DateTime.Now.Year, 1, 1);
+            var pdf = await _reportService.GenerateSimpleSearchPdf(minDate, maxDate);
+            return pdf;
+        }
 
-            if (!maxDate.HasValue)
-                maxDate = DateTime.Now;
-
-            var result = await _salesRecordsService.FindByDateAsync(minDate, maxDate);
-
-            return new ViewAsPdf("SimpleSearchPdf", result)
-            {
-                FileName = "relatorio_simples.pdf",
-                ContentDisposition = Rotativa.AspNetCore.Options.ContentDisposition.Inline
-            };
+        public async Task<IActionResult> GroupingSearchPdf(DateTime? minDate, DateTime? maxDate)
+        {
+            var pdf = await _reportService.GenerateGroupingSearchPdf(minDate, maxDate);
+            return pdf;
         }
     }
 }
