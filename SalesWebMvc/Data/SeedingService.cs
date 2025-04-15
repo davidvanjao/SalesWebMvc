@@ -54,7 +54,7 @@ namespace SalesWebMvc.Data
             SalesRecord r10 = new SalesRecord(10, new DateTime(2025, 02, 7), 9000.0, SaleStatus.Billed, s6);
             SalesRecord r11 = new SalesRecord(11, new DateTime(2025, 02, 13), 6000.0, SaleStatus.Billed, s2);
             SalesRecord r12 = new SalesRecord(12, new DateTime(2025, 02, 25), 7000.0, SaleStatus.Pending, s3);
-            SalesRecord r13 = new SalesRecord(13, new DateTime(2025, 02, 29), 10000.0, SaleStatus.Billed, s4);
+            SalesRecord r13 = new SalesRecord(13, new DateTime(2025, 02, 24), 10000.0, SaleStatus.Billed, s4);
             SalesRecord r14 = new SalesRecord(14, new DateTime(2025, 02, 4), 3000.0, SaleStatus.Billed, s5);
             SalesRecord r15 = new SalesRecord(15, new DateTime(2025, 02, 12), 4000.0, SaleStatus.Billed, s1);
             SalesRecord r16 = new SalesRecord(16, new DateTime(2025, 03, 5), 2000.0, SaleStatus.Billed, s4);
